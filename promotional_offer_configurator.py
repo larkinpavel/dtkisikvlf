@@ -39,4 +39,17 @@ class PromotionalOfferConfigurator:
         configuration = self.repository.get_by_card_type_region_and_merchant(card_type, merchant_region, merchant_id)
         if configuration is not None:
             return configuration.is_enabled
-        return None
+
+        configuration = self.repository.get_by_card_type_region_and_merchant(card_type, 0, merchant_id)
+        if configuration is not None:
+            return configuration.is_enabled
+
+        configuration = self.repository.get_by_card_type_region_and_merchant(card_type, merchant_region, 0)
+        if configuration is not None:
+            return configuration.is_enabled
+
+        configuration = self.repository.get_by_card_type_region_and_merchant(card_type, 0, 0)
+        if configuration is not None:
+            return configuration.is_enabled
+
+        return False
